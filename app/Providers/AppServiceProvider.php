@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Http\Services\ItemService;
 use App\Http\Services\NotificationService;
+use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,7 +15,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(NotificationService::class, function ($app) {
+        if ($this->app->environment() !== 'production')
+        {
+            $this->app->register(IdeHelperServiceProvider::class);
+        }
+        $this->app->singleton(NotificationService::class, function ($app)
+        {
             return new NotificationService();
         });
     }
