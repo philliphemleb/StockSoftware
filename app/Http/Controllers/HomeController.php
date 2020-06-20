@@ -21,6 +21,7 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
+     * @param Request $request
      * @return Renderable
      */
     public function index(Request $request)

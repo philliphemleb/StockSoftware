@@ -3,11 +3,14 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class HomeTest extends TestCase
+/**
+ * Class HomeControllerTest
+ * @covers \App\Http\Controllers\HomeController
+ * @package Tests\Feature
+ */
+class HomeControllerTest extends TestCase
 {
     use DatabaseMigrations;
 
@@ -24,7 +27,8 @@ class HomeTest extends TestCase
             ->assertViewIs('home')
             ->assertSee($user->name)
             ->assertSee($user->email)
-            ->assertSee(__('home.to_account'))
-            ->assertSee(__('home.logout'));
+            ->assertSee('Willkommen')
+            ->assertSee('Zu meinem Account')
+            ->assertSee('Abmelden');
     }
 }

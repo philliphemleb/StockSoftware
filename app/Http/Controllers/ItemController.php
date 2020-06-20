@@ -7,11 +7,11 @@ use App\Http\Requests\ItemUpdateRequest;
 use App\Http\Services\NotificationService;
 use App\Item;
 use App\User;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 
 class ItemController extends Controller
 {
@@ -45,7 +45,7 @@ class ItemController extends Controller
      *
      * @return Renderable
      */
-    public function create(Request $request): Renderable
+    public function create(): Renderable
     {
         return view('item.create');
     }
@@ -107,7 +107,7 @@ class ItemController extends Controller
      *
      * @param ItemUpdateRequest $request
      * @param int $id
-     * @return \Illuminate\Contracts\Foundation\Application|RedirectResponse|\Illuminate\Routing\Redirector
+     * @return Application|RedirectResponse|Redirector
      */
     public function update(ItemUpdateRequest $request, $id)
     {

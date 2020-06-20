@@ -3,13 +3,15 @@
 namespace Tests\Feature;
 
 use App\User;
-use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class UserTest extends TestCase
+/**
+ * Class UserControllerTest
+ * @covers UserController
+ * @package Tests\Feature
+ */
+class UserControllerTest extends TestCase
 {
     use DatabaseMigrations;
 
@@ -24,8 +26,10 @@ class UserTest extends TestCase
 
         $this->followingRedirects()->get('/user')
             ->assertViewIs('user.index')
+            ->assertSee('Willkommen')
             ->assertSee($user->name)
-            ->assertSee(__('user.change_account_data'));
+            ->assertSee('Persönliche Account Übersicht')
+            ->assertSee('Account bearbeiten');
     }
 
     public function testEdit()
@@ -34,13 +38,13 @@ class UserTest extends TestCase
 
         $this->followingRedirects()->get('/user/' . $user->id . '/edit')
             ->assertViewIs('user.edit')
-            ->assertSee(__('user.edit_name'))
+            ->assertSee('Namen bearbeiten')
             ->assertSee($user->name)
-            ->assertSee(__('user.edit_email'))
+            ->assertSee('Email bearbeiten')
             ->assertSee($user->email)
-            ->assertSee(__('user.edit_password'))
+            ->assertSee('Passwort bearbeiten')
             ->assertSee('Leer lassen falls keine Änderung')
-            ->assertSee(__('user.actual_password'))
+            ->assertSee('Aktuelles Passwort')
             ->assertSee('Bei Passwortänderung aktuelles Passwort eingeben');
     }
 

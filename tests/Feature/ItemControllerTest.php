@@ -1,18 +1,20 @@
 <?php
 declare(strict_types=1);
 
+namespace Tests\Feature;
 use App\Item;
-use App\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 /**
- * Class ItemTest
+ * Class ItemControllerTest
  *
  * @covers \App\Http\Controllers\ItemController
  * @todo Only Feature Tests
  */
-class ItemTest extends \Tests\TestCase
+class ItemControllerTest extends TestCase
 {
-    use \Illuminate\Foundation\Testing\DatabaseMigrations;
+    use DatabaseMigrations;
 
     public function testItemControllerShouldRedirectToLoginPageIfUserIsNotLoggedIn()
     {
@@ -22,6 +24,7 @@ class ItemTest extends \Tests\TestCase
     public function testIndex()
     {
         $this->login();
+
         $itemCollection = factory(Item::class, 5)->create();
 
         $this->followingRedirects()->get('/item')->assertViewIs('item.index')
@@ -38,9 +41,9 @@ class ItemTest extends \Tests\TestCase
 
         $this->followingRedirects()->get('/item/create')
             ->assertViewIs('item.create')
-            ->assertSee(__('item.name'))
-            ->assertSee(__('item.description'))
-            ->assertSee(__('item.amount'));
+            ->assertSee('Name')
+            ->assertSee('Beschreibung')
+            ->assertSee('Anzahl');
     }
 
     public function testStore()
@@ -66,9 +69,9 @@ class ItemTest extends \Tests\TestCase
             'description' => null,
             'amount' => null
         ])
-            ->assertSee( __('item.name_required'))
-            ->assertSee( __('item.description_required'))
-            ->assertSee( __('item.amount_required'));
+            ->assertSee('Ein Name ist erforderlich')
+            ->assertSee('Eine Beschreibung ist erforderlich')
+            ->assertSee('Die Anzahl ist erforderlich');
     }
 
     public function testShow()
@@ -92,7 +95,7 @@ class ItemTest extends \Tests\TestCase
 
         $this->followingRedirects()->get('/item/55555555')
             ->assertViewIs('item.index')
-            ->assertSee(__('item.not_found'));
+            ->assertSee('Angegebene ID wurde nicht gefunden');
     }
 
     public function testEdit()
@@ -103,9 +106,9 @@ class ItemTest extends \Tests\TestCase
 
         $this->followingRedirects()->get('/item/' . $item->id . '/edit')
             ->assertViewIs('item.edit')
-            ->assertSee(__('item.name'))
-            ->assertSee(__('item.description'))
-            ->assertSee(__('item.amount'));
+            ->assertSee('Name')
+            ->assertSee('Beschreibung')
+            ->assertSee('Anzahl');
     }
 
     public function testEditRedirectsToIndexOnError()
@@ -114,7 +117,7 @@ class ItemTest extends \Tests\TestCase
 
         $this->followingRedirects()->get('/item/55555555/edit')
             ->assertViewIs('item.index')
-            ->assertSee(__('item.not_found'));
+            ->assertSee('Angegebene ID wurde nicht gefunden');
     }
 
     public function testUpdate()
@@ -132,7 +135,7 @@ class ItemTest extends \Tests\TestCase
             ->assertSee('new name')
             ->assertSee('new description')
             ->assertSee('987')
-            ->assertSee(__('item.update_successful'));
+            ->assertSee('Erfolgreich aktualisiert');
     }
 
     public function testUpdateRedirectsToIndexOnError()
@@ -144,7 +147,7 @@ class ItemTest extends \Tests\TestCase
             'description' => 'new description',
             'amount' => '987'
         ])
-            ->assertSee(__('item.update_unsuccessful'));
+            ->assertSee('Konnte nicht aktualisiert werden');
     }
 
     public function testDelete()
@@ -154,7 +157,7 @@ class ItemTest extends \Tests\TestCase
         $item = factory(Item::class)->create();
 
         $this->followingRedirects()->delete('/item/' . $item->id)
-            ->assertSee(__('item.delete_successful'));
+            ->assertSee('Erfolgreich gelöscht');
     }
 
     public function testDeleteRedirectsToIndexOnError()
@@ -162,6 +165,6 @@ class ItemTest extends \Tests\TestCase
         $this->login();
 
         $this->followingRedirects()->delete('/item/55555')
-            ->assertSee(__('item.delete_unsuccessful'));
+            ->assertSee('Konnte nicht gelöscht werden');
     }
 }

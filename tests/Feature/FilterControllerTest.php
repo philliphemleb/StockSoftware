@@ -4,16 +4,14 @@ namespace Tests\Feature;
 
 use App\Filter;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
- * Class FilterTest
+ * Class FilterControllerTest
  * @package Tests\Feature
  * @covers \App\Http\Controllers\FilterController
  */
-class FilterTest extends TestCase
+class FilterControllerTest extends TestCase
 {
     use DatabaseMigrations;
 
@@ -95,7 +93,7 @@ class FilterTest extends TestCase
 
         $this->followingRedirects()->get('/filter/55555555')
             ->assertViewIs('filter.index')
-            ->assertSee(__('filter.not_found'));
+            ->assertSee('Filter wurde nicht gefunden');
     }
 
     public function testEdit()
@@ -106,11 +104,11 @@ class FilterTest extends TestCase
 
         $this->followingRedirects()->get('/filter/' . $filter->id . '/edit')
             ->assertViewIs('filter.edit')
-            ->assertSee(__('filter.name'))
+            ->assertSee('Name')
             ->assertSee($filter->name)
-            ->assertSee(__('filter.description'))
+            ->assertSee('Beschreibung')
             ->assertSee($filter->description)
-            ->assertSee(__('filter.submit'));
+            ->assertSee('Bestätigen');
     }
 
     public function testEditRedirectsToIndexIfFilterWasNotFound()
@@ -119,7 +117,7 @@ class FilterTest extends TestCase
 
         $this->followingRedirects()->get('/filter/55555555/edit')
             ->assertViewIs('filter.index')
-            ->assertSee(__('filter.not_found'));
+            ->assertSee('Filter wurde nicht gefunden');
     }
 
     public function testUpdate()
@@ -131,7 +129,8 @@ class FilterTest extends TestCase
         $this->followingRedirects()->put('/filter/' . $filter->id, ['name' => 'New Name', 'description' => 'New Description'])
             ->assertViewIs('filter.show')
             ->assertSee('New Name')
-            ->assertSee('New Description');
+            ->assertSee('New Description')
+            ->assertSee('Filter erfolgreich bearbeitet');
     }
 
     public function testUpdateRedirectsToIndexIfDataIsMissing()
@@ -142,8 +141,8 @@ class FilterTest extends TestCase
 
         $this->followingRedirects()->put('/filter/' . $filter->id, ['name' => null, 'description' => null])
             ->assertViewIs('filter.index')
-            ->assertSee(__('filter.name_required'))
-            ->assertSee(__('filter.description_required'));
+            ->assertSee('Ein Name ist notwendig')
+            ->assertSee('Eine Beschreibung ist notwendig');
     }
 
     public function testUpdateRedirectsToIndexIfFilterWasNotFound()
@@ -152,7 +151,7 @@ class FilterTest extends TestCase
 
         $this->followingRedirects()->put('/filter/5555', ['name' => 'new Name', 'description' => 'new Description'])
             ->assertViewIs('filter.index')
-            ->assertSee(__('filter.update_unsuccessful'));
+            ->assertSee('Filter konnte nicht bearbeitet werden');
     }
 
     public function testDestroy()
@@ -163,7 +162,7 @@ class FilterTest extends TestCase
 
         $this->followingRedirects()->delete('/filter/' . $filter->id)
             ->assertViewIs('filter.index')
-            ->assertSee(__('filter.delete_successful'))
+            ->assertSee('Filter erfolgreich gelöscht')
             ->assertDontSee($filter->name);
     }
 
@@ -173,6 +172,6 @@ class FilterTest extends TestCase
 
         $this->followingRedirects()->delete('/filter/5555')
             ->assertViewIs('filter.index')
-            ->assertSee(__('filter.delete_unsuccessful'));
+            ->assertSee('Filter konnte nicht gelöscht werden');
     }
 }
