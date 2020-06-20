@@ -4,6 +4,6 @@ You can generate PHP Documentation to avoid PhpStorm warnings:
     $model = Model::findOrFail($id);
 ```
 Just do:
-- [`php artisan ide-helper:generate`
-- [`php artisan ide-helper:models`
-- [`php artisan ide-helper:meta`
+- [`php artisan ide-helper:generate`]
+- [`php artisan ide-helper:models`]
+- [`php artisan ide-helper:meta`]
