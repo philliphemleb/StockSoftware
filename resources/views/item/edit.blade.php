@@ -1,6 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="jumbotron jumbotron-fluid">
+
+        <div class="container">
+            <h1 class="display-4">{{ $item->name }}</h1>
+            <p class="lead">{{ $item->description }}</p>
+            <hr class="my-4">
+            <p>ID: {{ $item->id }} @if($created_by !== null) | <?php echo __('item.last_edited', ['name' => $created_by->name]); ?> @endif</p>
+        </div>
+    </div>
+
     <form action="{{ route('item.update', $item->id) }}" method="POST">
         @csrf
         @method('PUT')

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -66,22 +67,14 @@ class ItemController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Redirects to edit page for a specific item.
      *
      * @param  int  $id
-     * @return Renderable|RedirectResponse
+     * @return RedirectResponse
      */
-    public function show(int $id)
+    public function show(int $id): RedirectResponse
     {
-        try {
-            $item = Item::findOrFail($id);
-            $created_by = User::find(1);
-        } catch(ModelNotFoundException $e) {
-            $this->notificationService->addStatusMessage(__('item.not_found'));
-            return redirect()->route('item.index');
-        }
-
-        return view('item.show', ['item' => $item, 'created_by' => $created_by]);
+        return redirect()->route('item.edit', $id);
     }
 
     /**
@@ -94,12 +87,13 @@ class ItemController extends Controller
     {
         try {
             $item = Item::findOrFail($id);
+            $created_by = User::find(1);
         } catch(ModelNotFoundException $e) {
             $this->notificationService->addStatusMessage(__('item.not_found'));
             return redirect()->route('item.index');
         }
 
-        return view('item.edit', ['item' => $item]);
+        return view('item.edit', ['item' => $item, 'created_by' => $created_by]);
     }
 
     /**
