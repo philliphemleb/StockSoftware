@@ -52,7 +52,6 @@
                         </li>
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
-                        <a class="btn btn-outline-dark mr-1" href="{{ route('filter.index') }}" role="button">{{ __('filter.menu') }}</a>
                         <a class="btn btn-primary" href="{{ route('item.create') }}" role="button">{{ __('item.store') }}</a>
                     </form>
                 </div>
