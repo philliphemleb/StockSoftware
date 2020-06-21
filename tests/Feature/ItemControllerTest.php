@@ -10,7 +10,6 @@ use Tests\TestCase;
  * Class ItemControllerTest
  *
  * @covers \App\Http\Controllers\ItemController
- * @todo Only Feature Tests
  */
 class ItemControllerTest extends TestCase
 {
