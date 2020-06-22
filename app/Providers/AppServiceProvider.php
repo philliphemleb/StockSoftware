@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Services\ItemService;
 use App\Http\Services\NotificationService;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Illuminate\Support\ServiceProvider;
@@ -19,9 +20,15 @@ class AppServiceProvider extends ServiceProvider
         {
             $this->app->register(IdeHelperServiceProvider::class);
         }
-        $this->app->singleton(NotificationService::class, function ($app)
+
+        $this->app->singleton(NotificationService::class, function ()
         {
             return new NotificationService();
+        });
+
+        $this->app->bind(ItemService::class, function ()
+        {
+           return new ItemService();
         });
     }
 

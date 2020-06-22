@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ItemStoreRequest;
 use App\Http\Requests\ItemUpdateRequest;
+use App\Http\Services\ItemService;
 use App\Http\Services\NotificationService;
 use App\Item;
-use App\Tag;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -24,10 +23,18 @@ class ItemController extends Controller
      */
     protected NotificationService $notificationService;
 
-    public function __construct(NotificationService $notificationService)
+    /**
+     * Contains the App\Http\Services\ItemService;
+     *
+     * @var ItemService
+     */
+    protected ItemService $itemService;
+
+    public function __construct(NotificationService $notificationService, ItemService $itemService)
     {
         $this->middleware('auth');
         $this->notificationService = $notificationService;
+        $this->itemService = $itemService;
     }
 
     /**
@@ -114,37 +121,14 @@ class ItemController extends Controller
             $this->notificationService->addStatusMessage(__('item.update_unsuccessful'));
             return redirect()->route('item.index');
         }
-        $tagCollection = $this->getTagsOfRequest($request);
 
+        $this->itemService->addTagsToItemFromString($item, $request->get('tags'));
         $item->fill($request->all());
-        $item->tags()->saveMany($tagCollection);
+
         $item->save();
 
         $this->notificationService->addStatusMessage(__('item.update_successful'));
-
         return redirect()->route('item.show', ['item' => $item->id]);
-    }
-
-    /**
-     * Get a TagCollection by given Request.
-     *
-     * @param ItemUpdateRequest $request
-     * @return Collection
-     */
-    private function getTagsOfRequest(ItemUpdateRequest $request): Collection
-    {
-        $tagArray = explode(',', $request->get('tags'));
-
-        $tagCollection = new Collection();
-        foreach ($tagArray as $tagString)
-        {
-            $tagString = trim($tagString);
-            $tag = Tag::firstOrNew(['name' => $tagString]);
-
-            $tagCollection->add($tag);
-        }
-
-        return $tagCollection;
     }
 
     /**
@@ -153,7 +137,7 @@ class ItemController extends Controller
      * @param  int  $id
      * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
         try {
             $item = Item::findOrFail($id);
