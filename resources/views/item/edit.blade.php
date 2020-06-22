@@ -36,7 +36,11 @@
             <label for="itemTagsInput">{{ __('item.add_tags') }}</label>
             <input type="text" class="form-control" id="itemTagsInput" name="tags" placeholder="{{ __('item.separate_tags') }}">
         </div>
-        
+        <div class="form-group">
+            <label for="itemDeleteTagsInput">{{ __('item.delete_tags') }}</label>
+            <input type="text" class="form-control" id="itemDeleteTagsInput" name="deleteTags" placeholder="{{ __('item.separate_tags') }}">
+        </div>
+
         <button type="submit" class="btn btn-primary">{{ __('item.submit') }}</button>
     </form>
 @endsection

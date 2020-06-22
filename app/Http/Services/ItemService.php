@@ -33,4 +33,26 @@ class ItemService
             $item->tags()->save($tag);
         }
     }
+
+    /**
+     * Handles the Tags String and deletes them in the given.
+     *
+     * @param Item $item
+     * @param string|null $tags
+     */
+    public function deleteTagsFromItemWithString(Item $item, string $tags = null)
+    {
+        if ($tags  == null) return;
+        $tags = explode(',', $tags);
+
+        foreach($tags as $tagString)
+        {
+            $tagString = trim($tagString);
+            if ($tagString === null || empty($tagString)) continue;
+            if ($item->tags->where('name', $tagString)->count() <= 0) continue;
+
+            $tag = $item->tags->where('name', $tagString)->first();
+            $item->tags()->detach($tag);
+        }
+    }
 }

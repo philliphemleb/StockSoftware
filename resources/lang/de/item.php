@@ -24,5 +24,6 @@ return [
     'inventory' => 'Warenbestand',
     'store' => 'Einlagern',
     'add_tags' => 'Tags hinzufügen',
+    'delete_tags' => 'Tags löschen',
     'separate_tags' => 'Einzelne Tags mit einem Komma trennen'
 ];
