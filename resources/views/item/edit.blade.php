@@ -8,7 +8,7 @@
             <p class="lead">{{ $item->description }}</p>
 
             @foreach ($item->tags as $tag)
-                <span class="badge badge-secondary">{{ $tag->name }}</span>
+                <x-itemEditBadge>{{ $tag->name }}</x-itemEditBadge>
             @endforeach
 
             <hr class="my-4">
@@ -36,6 +36,7 @@
             <label for="itemTagsInput">{{ __('item.add_tags') }}</label>
             <input type="text" class="form-control" id="itemTagsInput" name="tags" placeholder="{{ __('item.separate_tags') }}">
         </div>
+        
         <button type="submit" class="btn btn-primary">{{ __('item.submit') }}</button>
     </form>
 @endsection
