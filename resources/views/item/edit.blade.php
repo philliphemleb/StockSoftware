@@ -6,8 +6,13 @@
         <div class="container">
             <h1 class="display-4">{{ $item->name }}</h1>
             <p class="lead">{{ $item->description }}</p>
+
+            @foreach ($item->tags as $tag)
+                <span class="badge badge-secondary">{{ $tag->name }}</span>
+            @endforeach
+
             <hr class="my-4">
-            <p>ID: {{ $item->id }} @if($created_by !== null) | <?php echo __('item.last_edited', ['name' => $created_by->name]); ?> @endif</p>
+            <p>ID: {{ $item->id }} | <?php /** @var  \App\Item $item */echo __('item.created_by', ['name' => $item->user->name]); ?></p>
         </div>
     </div>
 
@@ -27,6 +32,10 @@
             <label for="itemAmountInput">{{ __('item.amount') }}</label>
             <input type="number" class="form-control" id="itemAmountInput" value="{{ $item->amount }}" name="amount">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="form-group">
+            <label for="itemTagsInput">{{ __('item.add_tags') }}</label>
+            <input type="text" class="form-control" id="itemTagsInput" name="tags" placeholder="{{ __('item.separate_tags') }}">
+        </div>
+        <button type="submit" class="btn btn-primary">{{ __('item.submit') }}</button>
     </form>
 @endsection

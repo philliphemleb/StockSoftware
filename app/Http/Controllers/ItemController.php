@@ -7,9 +7,10 @@ use App\Http\Requests\ItemStoreRequest;
 use App\Http\Requests\ItemUpdateRequest;
 use App\Http\Services\NotificationService;
 use App\Item;
-use App\User;
+use App\Tag;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -59,8 +60,11 @@ class ItemController extends Controller
      */
     public function store(ItemStoreRequest $request): RedirectResponse
     {
+        $user = auth()->user();
+
         $item = new Item();
         $item->fill($request->all());
+        $item->user_id = $user->id;
         $item->save();
 
         return redirect()->route('item.show', $item->id);
@@ -87,13 +91,12 @@ class ItemController extends Controller
     {
         try {
             $item = Item::findOrFail($id);
-            $created_by = User::find(1);
         } catch(ModelNotFoundException $e) {
             $this->notificationService->addStatusMessage(__('item.not_found'));
             return redirect()->route('item.index');
         }
 
-        return view('item.edit', ['item' => $item, 'created_by' => $created_by]);
+        return view('item.edit', ['item' => $item]);
     }
 
     /**
@@ -111,12 +114,37 @@ class ItemController extends Controller
             $this->notificationService->addStatusMessage(__('item.update_unsuccessful'));
             return redirect()->route('item.index');
         }
+        $tagCollection = $this->getTagsOfRequest($request);
+
         $item->fill($request->all());
+        $item->tags()->saveMany($tagCollection);
         $item->save();
 
         $this->notificationService->addStatusMessage(__('item.update_successful'));
 
         return redirect()->route('item.show', ['item' => $item->id]);
+    }
+
+    /**
+     * Get a TagCollection by given Request.
+     *
+     * @param ItemUpdateRequest $request
+     * @return Collection
+     */
+    private function getTagsOfRequest(ItemUpdateRequest $request): Collection
+    {
+        $tagArray = explode(',', $request->get('tags'));
+
+        $tagCollection = new Collection();
+        foreach ($tagArray as $tagString)
+        {
+            $tagString = trim($tagString);
+            $tag = Tag::firstOrNew(['name' => $tagString]);
+
+            $tagCollection->add($tag);
+        }
+
+        return $tagCollection;
     }
 
     /**

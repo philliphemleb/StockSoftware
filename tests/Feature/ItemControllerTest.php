@@ -42,7 +42,8 @@ class ItemControllerTest extends TestCase
             ->assertViewIs('item.create')
             ->assertSee('Name')
             ->assertSee('Beschreibung')
-            ->assertSee('Anzahl');
+            ->assertSee('Anzahl')
+            ->assertSee('Erstellen');
     }
 
     public function testStore()
@@ -80,21 +81,7 @@ class ItemControllerTest extends TestCase
         $item = factory(Item::class)->create(['created_by' => $user->id]);
 
         $this->followingRedirects()->get('/item/' . $item->id)
-            ->assertViewIs('item.show')
-            ->assertSee($item->id)
-            ->assertSee($item->name)
-            ->assertSee($item->description)
-            ->assertSee($user->name)
-            ->assertSee($item->amount);
-    }
-
-    public function testShowRedirectsToIndexOnError()
-    {
-        $this->login();
-
-        $this->followingRedirects()->get('/item/55555555')
-            ->assertViewIs('item.index')
-            ->assertSee('Angegebene ID wurde nicht gefunden');
+            ->assertViewIs('item.edit');
     }
 
     public function testEdit()
@@ -106,8 +93,15 @@ class ItemControllerTest extends TestCase
         $this->followingRedirects()->get('/item/' . $item->id . '/edit')
             ->assertViewIs('item.edit')
             ->assertSee('Name')
+            ->assertSee($item->name)
             ->assertSee('Beschreibung')
-            ->assertSee('Anzahl');
+            ->assertSee($item->description)
+            ->assertSee('Anzahl')
+            ->assertSee($item->amount)
+            ->assertSee('Tags hinzufügen')
+            ->assertSee('Einzelne Tags mit einem Komma trennen')
+            ->assertSee($item->tags)
+            ->assertSee('Bestätigen');
     }
 
     public function testEditRedirectsToIndexOnError()

@@ -10,6 +10,6 @@ $factory->define(Item::class, function (Faker $faker) {
         'name' => $faker->firstName,
         'description' => $faker->text,
         'amount' => $faker->randomNumber(),
-        'created_by' => $faker->numberBetween(0, 150)
+        'user_id' => $faker->numberBetween(0, 150)
     ];
 });
