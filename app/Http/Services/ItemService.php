@@ -26,7 +26,7 @@ class ItemService
         {
             $tagString = trim($tagString);
             if ($tagString === null || empty($tagString)) continue;
-            if (Tag::where('name', $tagString)->first() !== null) continue;
+            if ($item->tags->where('name', $tagString)->count() > 0) continue;
 
 
             $tag = Tag::firstOrNew(['name' => $tagString]);
