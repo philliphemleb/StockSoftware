@@ -20,14 +20,16 @@ class ItemService
     public function addTagsToItemFromString(Item $item, string $tags = null)
     {
         if ($tags == null) return;
-
         $tags = explode(',', $tags);
 
         foreach($tags as $tagString)
         {
             $tagString = trim($tagString);
-            $tag = Tag::firstOrNew(['name' => $tagString]);
+            if ($tagString === null || empty($tagString)) continue;
+            if (Tag::where('name', $tagString)->first() !== null) continue;
 
+
+            $tag = Tag::firstOrNew(['name' => $tagString]);
             $item->tags()->save($tag);
         }
     }
