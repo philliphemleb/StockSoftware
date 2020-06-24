@@ -25,5 +25,6 @@ return [
     'store' => 'Einlagern',
     'add_tags' => 'Tags hinzufügen',
     'delete_tags' => 'Tags löschen',
-    'separate_tags' => 'Einzelne Tags mit einem Komma trennen'
+    'separate_tags' => 'Einzelne Tags mit einem Komma trennen',
+    'amount_too_high' => 'Die Anzahl ist zu hoch'
 ];
