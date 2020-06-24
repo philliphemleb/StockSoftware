@@ -26,5 +26,8 @@ return [
     'add_tags' => 'Tags hinzufügen',
     'delete_tags' => 'Tags löschen',
     'separate_tags' => 'Einzelne Tags mit einem Komma trennen',
+    'add_categories' => 'Kategorien hinzufügen',
+    'delete_categories' => 'Kategorien löschen',
+    'separate_categories' => 'Einzelne Kategorien mit einem Komma trennen',
     'amount_too_high' => 'Die Anzahl ist zu hoch'
 ];

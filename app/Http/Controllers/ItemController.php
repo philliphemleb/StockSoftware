@@ -124,6 +124,8 @@ class ItemController extends Controller
 
         $this->itemService->addTagsToItemFromString($item, $request->get('tags'));
         $this->itemService->deleteTagsFromItemWithString($item, $request->get('deleteTags'));
+        $this->itemService->addCategoriesToItemFromString($item, $request->get('categories'));
+        $this->itemService->deleteCategoriesFromItemWithString($item, $request->get('deleteCategories'));
         $item->fill($request->all());
 
         $item->save();

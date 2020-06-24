@@ -13,6 +13,9 @@
 
             <hr class="my-4">
             <p>ID: {{ $item->id }} | <?php /** @var  \App\Item $item */echo __('item.created_by', ['name' => $item->user->name]); ?></p>
+            @foreach ($item->categories as $category)
+                <x-itemEditBadge>{{ $category->name }}</x-itemEditBadge>
+            @endforeach
         </div>
     </div>
 
@@ -39,6 +42,14 @@
         <div class="form-group">
             <label for="itemDeleteTagsInput">{{ __('item.delete_tags') }}</label>
             <input type="text" class="form-control" id="itemDeleteTagsInput" name="deleteTags" placeholder="{{ __('item.separate_tags') }}">
+        </div>
+        <div class="form-group">
+            <label for="itemCategoriesInput">{{ __('item.add_categories') }}</label>
+            <input type="text" class="form-control" id="itemCategoriesInput" name="categories" placeholder="{{ __('item.separate_category') }}">
+        </div>
+        <div class="form-group">
+            <label for="itemDeleteCategoriesInput">{{ __('item.delete_categories') }}</label>
+            <input type="text" class="form-control" id="itemDeleteCategoriesInput" name="deleteCategories" placeholder="{{ __('item.separate_category') }}">
         </div>
 
         <button type="submit" class="btn btn-primary">{{ __('item.submit') }}</button>

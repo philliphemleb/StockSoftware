@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace Tests\Feature;
+use App\Category;
 use App\Item;
 use App\Tag;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -103,6 +104,7 @@ class ItemControllerTest extends TestCase
 
         $item = factory(Item::class)->create();
         $item->tags()->saveMany(factory(Tag::class, 3)->create());
+        $item->categories()->saveMany(factory(Category::class, 3)->create());
 
         $this->followingRedirects()->get('/item/' . $item->id . '/edit')
             ->assertViewIs('item.edit')
@@ -116,10 +118,15 @@ class ItemControllerTest extends TestCase
             ->assertSee($item->amount)
             ->assertSee('Tags hinzufügen')
             ->assertSee('Tags löschen')
+            ->assertSee('Kategorien hinzufügen')
+            ->assertSee('Kategorien löschen')
             ->assertSee('Einzelne Tags mit einem Komma trennen')
             ->assertSee($item->tags[0]->name)
             ->assertSee($item->tags[1]->name)
             ->assertSee($item->tags[2]->name)
+            ->assertSee($item->categories[0]->name)
+            ->assertSee($item->categories[1]->name)
+            ->assertSee($item->categories[2]->name)
             ->assertSee('Bestätigen');
     }
 

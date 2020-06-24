@@ -4,6 +4,7 @@ namespace App;
 
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -31,6 +32,10 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Item whereUpdatedAt($value)
  * @method static Builder|Item whereUserId($value)
  * @mixin Eloquent
+ * @property-read Collection|Category[] $categories
+ * @property-read int|null $categories_count
+ * @property-read Collection|Tag[] $tags
+ * @property-read int|null $tags_count
  */
 class Item extends Model
 {
@@ -56,5 +61,15 @@ class Item extends Model
     public function tags()
     {
         return $this->belongsToMany('App\Tag');
+    }
+
+    /**
+     * Get the categories on this item.
+     *
+     * @return BelongsToMany
+     */
+    public function categories()
+    {
+        return $this->belongsToMany('App\Category');
     }
 }
