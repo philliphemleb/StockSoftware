@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Http\Services;
 
-use Illuminate\Http\Request;
-
 /**
  * Class NotificationService
  * @package App\Http\Services
@@ -28,13 +26,13 @@ class NotificationService
     {
         array_unshift($this->statusMessages, $statusMessage);
 
-        $this->refresh();
+        $this->reflash();
 
         return $this->statusMessages;
     }
 
 
-    private function refresh()
+    private function reflash()
     {
         request()->session()->flash('status_messages', $this->statusMessages);
     }

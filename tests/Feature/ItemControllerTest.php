@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 use App\Item;
+use App\Tag;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
@@ -57,7 +58,7 @@ class ItemControllerTest extends TestCase
                 'name' => $item->name,
                 'description' => $item->description,
                 'amount' => $item->amount
-            ])->assertViewIs('item.show');
+            ])->assertViewIs('item.edit');
     }
 
     public function testStoreRedirectsBackToCreateOnFail()
@@ -78,7 +79,7 @@ class ItemControllerTest extends TestCase
     {
         $user = $this->login();
 
-        $item = factory(Item::class)->create(['created_by' => $user->id]);
+        $item = factory(Item::class)->create(['user_id' => $user->id]);
 
         $this->followingRedirects()->get('/item/' . $item->id)
             ->assertViewIs('item.edit');
@@ -89,9 +90,12 @@ class ItemControllerTest extends TestCase
         $this->login();
 
         $item = factory(Item::class)->create();
+        $item->tags()->saveMany(factory(Tag::class, 3)->create());
 
         $this->followingRedirects()->get('/item/' . $item->id . '/edit')
             ->assertViewIs('item.edit')
+            ->assertSee($item->id)
+            ->assertSee($item->user->name)
             ->assertSee('Name')
             ->assertSee($item->name)
             ->assertSee('Beschreibung')
@@ -99,8 +103,11 @@ class ItemControllerTest extends TestCase
             ->assertSee('Anzahl')
             ->assertSee($item->amount)
             ->assertSee('Tags hinzufügen')
+            ->assertSee('Tags löschen')
             ->assertSee('Einzelne Tags mit einem Komma trennen')
-            ->assertSee($item->tags)
+            ->assertSee($item->tags[0]->name)
+            ->assertSee($item->tags[1]->name)
+            ->assertSee($item->tags[2]->name)
             ->assertSee('Bestätigen');
     }
 
@@ -122,13 +129,17 @@ class ItemControllerTest extends TestCase
         $this->followingRedirects()->put('/item/' . $item->id, [
             'name' => 'new name',
             'description' => 'new description',
-            'amount' => '987'
+            'amount' => '987',
+            'tags' => 'not Created Tag, firstExistingTag, SecondExisting Tag'
         ])
-            ->assertViewIs('item.show')
+            ->assertViewIs('item.edit')
             ->assertSee('new name')
             ->assertSee('new description')
             ->assertSee('987')
-            ->assertSee('Erfolgreich aktualisiert');
+            ->assertSee('Erfolgreich aktualisiert')
+            ->assertSee('not Created Tag')
+            ->assertSee('firstExistingTag')
+            ->assertSee('SecondExisting Tag');
     }
 
     public function testUpdateRedirectsToIndexOnError()

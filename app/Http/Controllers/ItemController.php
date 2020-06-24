@@ -129,7 +129,7 @@ class ItemController extends Controller
         $item->save();
 
         $this->notificationService->addStatusMessage(__('item.update_successful'));
-        return redirect()->route('item.show', ['item' => $item->id]);
+        return redirect()->route('item.edit', ['item' => $item->id]);
     }
 
     /**
