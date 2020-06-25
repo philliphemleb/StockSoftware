@@ -45,11 +45,11 @@
         </div>
         <div class="form-group">
             <label for="itemCategoriesInput">{{ __('item.add_categories') }}</label>
-            <input type="text" class="form-control" id="itemCategoriesInput" name="categories" placeholder="{{ __('item.separate_category') }}">
+            <input type="text" class="form-control" id="itemCategoriesInput" name="categories" placeholder="{{ __('item.separate_categories') }}">
         </div>
         <div class="form-group">
             <label for="itemDeleteCategoriesInput">{{ __('item.delete_categories') }}</label>
-            <input type="text" class="form-control" id="itemDeleteCategoriesInput" name="deleteCategories" placeholder="{{ __('item.separate_category') }}">
+            <input type="text" class="form-control" id="itemDeleteCategoriesInput" name="deleteCategories" placeholder="{{ __('item.separate_categories') }}">
         </div>
 
         <button type="submit" class="btn btn-primary">{{ __('item.submit') }}</button>
