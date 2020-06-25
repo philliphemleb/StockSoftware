@@ -23,8 +23,5 @@ Route::resource('user', 'UserController');
 // Item
 Route::resource('item', 'ItemController');
 
-// Filter
-Route::resource('filter', 'FilterController');
-
 // Auth
 Auth::routes();

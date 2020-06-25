@@ -2,7 +2,9 @@
 declare(strict_types=1);
 
 namespace Tests\Feature;
+use App\Category;
 use App\Item;
+use App\Tag;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
@@ -10,7 +12,6 @@ use Tests\TestCase;
  * Class ItemControllerTest
  *
  * @covers \App\Http\Controllers\ItemController
- * @todo Only Feature Tests
  */
 class ItemControllerTest extends TestCase
 {
@@ -32,7 +33,8 @@ class ItemControllerTest extends TestCase
             ->assertSee($itemCollection->find(2)->name)
             ->assertSee($itemCollection->find(3)->name)
             ->assertSee($itemCollection->find(4)->name)
-            ->assertSee($itemCollection->find(5)->name);
+            ->assertSee($itemCollection->find(5)->name)
+            ->assertSee('Suchen (Tags und Kategorien werden berücksichtigt)');
     }
 
     public function testCreate()
@@ -43,7 +45,8 @@ class ItemControllerTest extends TestCase
             ->assertViewIs('item.create')
             ->assertSee('Name')
             ->assertSee('Beschreibung')
-            ->assertSee('Anzahl');
+            ->assertSee('Anzahl')
+            ->assertSee('Erstellen');
     }
 
     public function testStore()
@@ -57,7 +60,7 @@ class ItemControllerTest extends TestCase
                 'name' => $item->name,
                 'description' => $item->description,
                 'amount' => $item->amount
-            ])->assertViewIs('item.show');
+            ])->assertViewIs('item.edit');
     }
 
     public function testStoreRedirectsBackToCreateOnFail()
@@ -74,28 +77,26 @@ class ItemControllerTest extends TestCase
             ->assertSee('Die Anzahl ist erforderlich');
     }
 
+    public function testStoreRedirectsBackToCreateIfAmountIsTooHigh()
+    {
+        $this->login();
+
+        $this->followingRedirects()->post('/item', [
+            'name' => 'name',
+            'description' => 'description',
+            'amount' => 1e99
+        ])
+            ->assertSee('Die Anzahl ist zu hoch');
+    }
+
     public function testShow()
     {
         $user = $this->login();
 
-        $item = factory(Item::class)->create(['created_by' => $user->id]);
+        $item = factory(Item::class)->create(['user_id' => $user->id]);
 
         $this->followingRedirects()->get('/item/' . $item->id)
-            ->assertViewIs('item.show')
-            ->assertSee($item->id)
-            ->assertSee($item->name)
-            ->assertSee($item->description)
-            ->assertSee($user->name)
-            ->assertSee($item->amount);
-    }
-
-    public function testShowRedirectsToIndexOnError()
-    {
-        $this->login();
-
-        $this->followingRedirects()->get('/item/55555555')
-            ->assertViewIs('item.index')
-            ->assertSee('Angegebene ID wurde nicht gefunden');
+            ->assertViewIs('item.edit');
     }
 
     public function testEdit()
@@ -103,12 +104,31 @@ class ItemControllerTest extends TestCase
         $this->login();
 
         $item = factory(Item::class)->create();
+        $item->tags()->saveMany(factory(Tag::class, 3)->create());
+        $item->categories()->saveMany(factory(Category::class, 3)->create());
 
         $this->followingRedirects()->get('/item/' . $item->id . '/edit')
             ->assertViewIs('item.edit')
+            ->assertSee($item->id)
+            ->assertSee($item->user->name)
             ->assertSee('Name')
+            ->assertSee($item->name)
             ->assertSee('Beschreibung')
-            ->assertSee('Anzahl');
+            ->assertSee($item->description)
+            ->assertSee('Anzahl')
+            ->assertSee($item->amount)
+            ->assertSee('Tags hinzufügen')
+            ->assertSee('Tags löschen')
+            ->assertSee('Kategorien hinzufügen')
+            ->assertSee('Kategorien löschen')
+            ->assertSee('Einzelne Tags mit einem Komma trennen')
+            ->assertSee($item->tags[0]->name)
+            ->assertSee($item->tags[1]->name)
+            ->assertSee($item->tags[2]->name)
+            ->assertSee($item->categories[0]->name)
+            ->assertSee($item->categories[1]->name)
+            ->assertSee($item->categories[2]->name)
+            ->assertSee('Bestätigen');
     }
 
     public function testEditRedirectsToIndexOnError()
@@ -129,25 +149,44 @@ class ItemControllerTest extends TestCase
         $this->followingRedirects()->put('/item/' . $item->id, [
             'name' => 'new name',
             'description' => 'new description',
-            'amount' => '987'
+            'amount' => 987,
+            'tags' => 'not Created Tag, firstExistingTag, SecondExisting Tag'
         ])
-            ->assertViewIs('item.show')
+            ->assertViewIs('item.edit')
             ->assertSee('new name')
             ->assertSee('new description')
             ->assertSee('987')
-            ->assertSee('Erfolgreich aktualisiert');
+            ->assertSee('Erfolgreich aktualisiert')
+            ->assertSee('not Created Tag')
+            ->assertSee('firstExistingTag')
+            ->assertSee('SecondExisting Tag');
     }
 
-    public function testUpdateRedirectsToIndexOnError()
+    public function testUpdateRedirectsBackOnError()
     {
         $this->login();
 
         $this->followingRedirects()->put('/item/' . '55555555', [
             'name' => 'new name',
             'description' => 'new description',
-            'amount' => '987'
+            'amount' => 987
         ])
             ->assertSee('Konnte nicht aktualisiert werden');
+    }
+
+    public function testUpdateRedirectsBackIfAmountIsTooHigh()
+    {
+        $this->login();
+
+        $item = factory(Item::class)->create();
+
+        $this->followingRedirects()->put('/item/' . $item->id, [
+            'name' => 'new name',
+            'description' => 'new description',
+            'amount' => 1e99,
+            'tags' => 'not Created Tag, firstExistingTag, SecondExisting Tag'
+        ])
+            ->assertSee('Die Anzahl ist zu hoch');
     }
 
     public function testDelete()

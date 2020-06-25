@@ -1,15 +1,17 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+/** @var Factory $factory */
 
 use App\Item;
+use App\User;
 use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factory;
 
 $factory->define(Item::class, function (Faker $faker) {
     return [
-        'name' => $faker->firstName,
+        'name' => $faker->unique()->name,
         'description' => $faker->text,
         'amount' => $faker->randomNumber(),
-        'created_by' => $faker->numberBetween(0, 150)
+        'user_id' => factory(User::class)
     ];
 });

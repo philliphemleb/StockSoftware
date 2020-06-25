@@ -1,5 +1,5 @@
 ## Ide-Helper
-You can generate PHP Documentation to avoid PhpStorm warnings:
+You can generate PHP Documentation to avoid PhpStorm warnings on magic calls:
 ```php
     $model = Model::findOrFail($id);
 ```

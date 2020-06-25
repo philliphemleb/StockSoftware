@@ -36,6 +36,7 @@ class ItemStoreRequest extends FormRequest
             'name.required' => __('item.name_required'),
             'description.required' => __('item.description_required'),
             'amount.required' => __('item.amount_required'),
+            'amount.integer' => __('item.amount_too_high')
         ];
     }
 }
