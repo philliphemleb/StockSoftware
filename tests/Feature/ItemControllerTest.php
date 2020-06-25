@@ -33,7 +33,8 @@ class ItemControllerTest extends TestCase
             ->assertSee($itemCollection->find(2)->name)
             ->assertSee($itemCollection->find(3)->name)
             ->assertSee($itemCollection->find(4)->name)
-            ->assertSee($itemCollection->find(5)->name);
+            ->assertSee($itemCollection->find(5)->name)
+            ->assertSee('Suchen (Tags und Kategorien werden berücksichtigt)');
     }
 
     public function testCreate()

@@ -10,8 +10,10 @@ use App\Http\Services\NotificationService;
 use App\Item;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 
 class ItemController extends Controller
@@ -40,11 +42,20 @@ class ItemController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return Renderable
      */
-    public function index(): Renderable
+    public function index(Request $request): Renderable
     {
         $itemCollectionData = Item::all();
+
+        $searchString = $request->get('search');
+        if ($searchString)
+        {
+            $itemCollectionData = Item::where(function (Builder $query) use ($searchString) {
+                return $query->where('name','LIKE',$searchString.'%');
+            })->limit(5)->get();
+        }
 
         return view('item.index', ['itemCollection' => $itemCollectionData]);
     }
