@@ -21,7 +21,8 @@
         "sass-loader": "^8.0.0",
         "tailwindcss": "^1.4.6",
         "vue": "^2.5.17",
-        "vue-template-compiler": "^2.6.10"
+        "vue-template-compiler": "^2.6.10",
+        "@fortawesome/fontawesome-free": "^5.13.1"
     },
     "dependencies": {
         "laravel-echo": "^1.8.0",
