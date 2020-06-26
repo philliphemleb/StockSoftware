@@ -1,10 +1,9 @@
 module.exports = {
   purge: [],
   theme: {
-    container: {
-      center: true
-    },
-    extend: {},
+      container: {
+          center: true,
+      },
   },
   variants: {},
   plugins: [],

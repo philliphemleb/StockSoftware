@@ -19,6 +19,11 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+// Navigation
+Vue.component('navigation', require('./components/navigation/Navigation').default);
+Vue.component('navigation-list-item', require('./components/navigation/NavigationListItem').default);
+
+// Notification
 Vue.component('notification', require('./components/NotificationComponent.vue').default);
 
 // For Items
