@@ -2,6 +2,6 @@
 
 return [
     'index' => 'Start',
-    'control_panel' => 'Admin',
+    'admin' => 'Admin',
     'logout' => 'Abmelden'
 ];
