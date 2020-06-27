@@ -24,7 +24,8 @@ Vue.component('navigation', require('./components/navigation/Navigation').defaul
 Vue.component('navigation-list-item', require('./components/navigation/NavigationListItem').default);
 
 // Notification
-Vue.component('notification', require('./components/NotificationComponent.vue').default);
+Vue.component('notification-container', require('./components/notification/NotificationContainer').default);
+Vue.component('notification-item', require('./components/notification/NotificationItem').default);
 
 // For Items
 Vue.component('item-edit-badge', require('./components/ItemEditBadgeComponent.vue').default);

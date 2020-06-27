@@ -20,28 +20,26 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <!-- {{-- @if (Session()->has('status_messages') || $errors->any())
-        <div style="position: absolute; top: 5rem; right: 1rem; z-index: 9999">
-            @if (Session()->has('status_messages'))
-                @foreach (Session()->get('status_messages') as $status_message)
-                    <x-notification>{{ $status_message }}</x-notification>
-                @endforeach
-            @endif
-            @if ($errors->any())
-                @foreach ($errors->all() as $error)
-                    <x-notification>{{ $error }}</x-notification>
-                @endforeach
-            @endif
-        </div>
-    @endif --}} -->
-
     <div id="app" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="notification">
+            <notification-container>
+                @if (Session()->has('status_messages'))
+                    @foreach (Session()->get('status_messages') as $status_message)
+                        <notification-item title="{{ __('notification.title') }}" type="{{ $status_message['type'] }}">{{ $status_message['content'] }}</notification-item>
+                    @endforeach
+                @endif
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <notification-item title="{{ __('notification.title') }}" type="error">{{ $error }}</notification-item>
+                    @endforeach
+                @endif
+            </notification-container>
+        </div>
 
         <navigation>
             <navigation-list-item route="{{ route('home') }}" text="{{ __('navigation.index') }}" icon="fas fa-home"></navigation-list-item>
             <navigation-list-item route="{{ route('home') }}" text="{{ __('navigation.admin') }}" icon="fas fa-sliders-h"></navigation-list-item>
-
-            <navigation-list-item class="md:hidden" route="{{ route('home') }}" text="{{ __('navigation.logout') }}" icon="fas fa-sliders-h"></navigation-list-item>
+            <navigation-list-item class="md:hidden" route="{{ route('logout') }}" text="{{ __('navigation.logout') }}" icon="fas fa-sliders-h"></navigation-list-item>
         </navigation>
 
 
