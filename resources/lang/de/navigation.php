@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'index' => 'Start',
-    'admin' => 'Admin',
+    'dashboard' => 'Dashboard',
+    'items' => 'Lager',
     'logout' => 'Abmelden'
 ];
