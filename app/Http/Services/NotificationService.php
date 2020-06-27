@@ -20,14 +20,15 @@ class NotificationService
      * Add´s a status message and returns the whole array.
      *
      * @param string $statusMessage
+     * @param string $type
      * @return array
      */
-    public function addStatusMessage(string $statusMessage): array
+    public function addStatusMessage(string $statusMessage, string $type = 'info'): array
     {
-        array_unshift($this->statusMessages, $statusMessage);
+        $status = ['content' => $statusMessage, 'type' => $type];
+        array_unshift($this->statusMessages, $status);
 
         $this->reflash();
-
         return $this->statusMessages;
     }
 
