@@ -39,7 +39,7 @@
         <navigation>
             <navigation-list-item route="{{ route('home') }}" text="{{ __('navigation.index') }}" icon="fas fa-home"></navigation-list-item>
             <navigation-list-item route="{{ route('home') }}" text="{{ __('navigation.admin') }}" icon="fas fa-sliders-h"></navigation-list-item>
-            <navigation-list-item class="md:hidden" route="{{ route('logout') }}" text="{{ __('navigation.logout') }}" icon="fas fa-sliders-h"></navigation-list-item>
+            <navigation-list-item class="md:hidden" route="{{ route('logout') }}" text="{{ __('navigation.logout') }}" icon="fas fa-sign-out-alt"></navigation-list-item>
         </navigation>
 
 
