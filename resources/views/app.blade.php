@@ -20,7 +20,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+    <div id="app">
+
         <div class="notification">
             <notification-container>
                 @if (Session()->has('status_messages'))
@@ -43,9 +44,9 @@
         </navigation>
 
 
-        <!-- <main class="py-4 container">
-            {{-- @yield('content') --}}
-        </main> -->
+        <main class="py-4 md:grid md:grid-cols-3">
+            @yield('content')
+        </main>
     </div>
 </body>
 </html>
