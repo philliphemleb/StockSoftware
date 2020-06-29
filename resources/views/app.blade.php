@@ -38,9 +38,9 @@
         </div>
 
         <navigation>
-            <navigation-list-item route="{{ route('home') }}" text="{{ __('navigation.index') }}" icon="fas fa-home"></navigation-list-item>
-            <navigation-list-item route="{{ route('home') }}" text="{{ __('navigation.admin') }}" icon="fas fa-sliders-h"></navigation-list-item>
-            <navigation-list-item class="md:hidden" route="{{ route('logout') }}" text="{{ __('navigation.logout') }}" icon="fas fa-sign-out-alt"></navigation-list-item>
+            <navigation-list-item route="{{ route('home') }}" icon="fas fa-home">{{ __('navigation.dashboard') }}</navigation-list-item>
+            <navigation-list-item route="{{ route('item.index') }}" icon="fas fa-boxes">{{ __('navigation.items') }}</navigation-list-item>
+            <navigation-list-item class="md:hidden" route="{{ route('logout') }}" icon="fas fa-sign-out-alt">{{ __('navigation.logout') }}</navigation-list-item>
         </navigation>
 
 
