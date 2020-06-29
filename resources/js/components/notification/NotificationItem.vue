@@ -1,5 +1,5 @@
 <template>
-    <div class="border-l-4 border-r-4 text-black px-4 py-3 my-4 rounded relative" role="alert"
+    <div class="border-l-4 border-r-4 text-black px-4 py-3 mb-4 rounded relative" role="alert"
          :class="typeColorClasses">
         <strong class="font-bold block mr-8">{{ title }}</strong>
         <span class="block sm:inline"><slot></slot></span>
