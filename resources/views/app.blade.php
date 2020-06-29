@@ -20,31 +20,29 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="md:grid md:grid-cols-4 lg:grid-cols-5">
+        <notification-container>
+            @if (Session()->has('status_messages'))
+                @foreach (Session()->get('status_messages') as $status_message)
+                    <notification-item title="{{ __('notification.title') }}" type="{{ $status_message['type'] }}">{{ $status_message['content'] }}</notification-item>
+                @endforeach
+            @endif
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    <notification-item title="{{ __('notification.title') }}" type="error">{{ $error }}</notification-item>
+                @endforeach
+            @endif
+        </notification-container>
 
-        <div class="notification">
-            <notification-container>
-                @if (Session()->has('status_messages'))
-                    @foreach (Session()->get('status_messages') as $status_message)
-                        <notification-item title="{{ __('notification.title') }}" type="{{ $status_message['type'] }}">{{ $status_message['content'] }}</notification-item>
-                    @endforeach
-                @endif
-                @if ($errors->any())
-                    @foreach ($errors->all() as $error)
-                        <notification-item title="{{ __('notification.title') }}" type="error">{{ $error }}</notification-item>
-                    @endforeach
-                @endif
-            </notification-container>
+        <div id="navigation">
+            <navigation>
+                <navigation-list-item route="{{ route('home') }}" icon="fas fa-home">{{ __('navigation.dashboard') }}</navigation-list-item>
+                <navigation-list-item route="{{ route('item.index') }}" icon="fas fa-boxes">{{ __('navigation.items') }}</navigation-list-item>
+                <navigation-list-item class="md:hidden" route="{{ route('logout') }}" icon="fas fa-sign-out-alt">{{ __('navigation.logout') }}</navigation-list-item>
+            </navigation>
         </div>
 
-        <navigation>
-            <navigation-list-item route="{{ route('home') }}" icon="fas fa-home">{{ __('navigation.dashboard') }}</navigation-list-item>
-            <navigation-list-item route="{{ route('item.index') }}" icon="fas fa-boxes">{{ __('navigation.items') }}</navigation-list-item>
-            <navigation-list-item class="md:hidden" route="{{ route('logout') }}" icon="fas fa-sign-out-alt">{{ __('navigation.logout') }}</navigation-list-item>
-        </navigation>
-
-
-        <main class="py-4 md:grid md:grid-cols-3">
+        <main class="md:col-start-2 md:col-end-5 md:mr-10 lg:mr-0">
             @yield('content')
         </main>
     </div>

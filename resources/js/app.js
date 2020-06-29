@@ -19,6 +19,12 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+// Single Components
+Vue.component('table-component', require('./components/Table').default);
+Vue.component('table-item', require('./components/TableItem').default);
+
+Vue.component('search', require('./components/Search').default);
+
 // Navigation
 Vue.component('navigation', require('./components/navigation/Navigation').default);
 Vue.component('navigation-list-item', require('./components/navigation/NavigationListItem').default);
