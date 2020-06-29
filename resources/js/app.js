@@ -27,9 +27,6 @@ Vue.component('navigation-list-item', require('./components/navigation/Navigatio
 Vue.component('notification-container', require('./components/notification/NotificationContainer').default);
 Vue.component('notification-item', require('./components/notification/NotificationItem').default);
 
-// For Items
-Vue.component('item-edit-badge', require('./components/ItemEditBadgeComponent.vue').default);
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
