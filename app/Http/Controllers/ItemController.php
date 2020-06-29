@@ -47,14 +47,14 @@ class ItemController extends Controller
      */
     public function index(Request $request): Renderable
     {
-        $itemCollectionData = Item::all();
+        $itemCollectionData = Item::all()->take(50);
 
         $searchString = $request->get('search');
         if ($searchString)
         {
             $itemCollectionData = Item::where(function (Builder $query) use ($searchString) {
                 return $query->where('name','LIKE',$searchString.'%');
-            })->limit(5)->get();
+            })->limit(30)->get();
         }
 
         return view('item.index', ['itemCollection' => $itemCollectionData]);
