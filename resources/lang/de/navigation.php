@@ -3,5 +3,6 @@
 return [
     'dashboard' => 'Dashboard',
     'items' => 'Lager',
-    'logout' => 'Abmelden'
+    'logout' => 'Abmelden',
+    'create_item' => 'Artikel erstellen'
 ];

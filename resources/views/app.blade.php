@@ -36,9 +36,19 @@
 
         <div id="navigation">
             <navigation>
-                <navigation-list-item route="{{ route('home') }}" icon="fas fa-home">{{ __('navigation.dashboard') }}</navigation-list-item>
-                <navigation-list-item route="{{ route('item.index') }}" icon="fas fa-boxes">{{ __('navigation.items') }}</navigation-list-item>
-                <navigation-list-item class="md:hidden" route="{{ route('logout') }}" icon="fas fa-sign-out-alt">{{ __('navigation.logout') }}</navigation-list-item>
+                <navigation-list-item
+                    route="{{ route('home') }}"
+                    icon="fas fa-home">{{ __('navigation.dashboard') }}
+                </navigation-list-item>
+                <navigation-list-item
+                    route="{{ route('item.index') }}"
+                    :hover-links="{{ json_encode([ [__('navigation.create_item'), route('item.create')] ]) }}"
+                    icon="fas fa-boxes">{{ __('navigation.items') }}
+                </navigation-list-item>
+                <navigation-list-item class="md:hidden"
+                                      route="{{ route('logout') }}"
+                                      icon="fas fa-sign-out-alt">{{ __('navigation.logout') }}
+                </navigation-list-item>
             </navigation>
         </div>
 
