@@ -1,8 +1,14 @@
 <?php
 
 return [
-    'login_failed' => 'Login war nicht erfolgreich',
-    'remember_me' => 'Daten merken',
+    'username' => 'Username',
+    'username_placeholder' => 'Username eingeben',
+    'username_required' => 'Username ist erforderlich',
     'password' => 'Passwort',
-    'forgot_password?' => 'Passwort vergessen?'
+    'password_placeholder' => 'Passwort eingeben',
+    'password_required' => 'Passwort ist erforderlich',
+    'remember_me' => 'Daten merken',
+    'forgot_password?' => 'Passwort vergessen?',
+    'submit' => 'Bestätigen',
+    'successful' => 'Login erfolgreich',
 ];

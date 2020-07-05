@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-    <div id="item-index" class="mb-20">
+    <div id="item-index" class="mb-20 mt-6 mx-6">
 
         <search route="{{ route('item.index') }}" placeholder="{{ __('item.search_placeholder') }}"></search>
 

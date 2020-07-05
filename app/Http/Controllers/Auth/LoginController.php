@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\NotificationService;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -31,13 +31,20 @@ class LoginController extends Controller
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
+     * @var NotificationService
+     */
+    private NotificationService $notificationService;
+
+    /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param NotificationService $notificationService
      */
-    public function __construct()
+    public function __construct(NotificationService $notificationService)
     {
         $this->middleware('guest')->except('logout');
+
+        $this->notificationService = $notificationService;
     }
 
     public function username()
@@ -45,10 +52,23 @@ class LoginController extends Controller
         return 'name';
     }
 
-    public function sendFailedLoginResponse(Request $request)
+    public function validateLogin(Request $request)
     {
-        throw ValidationException::withMessages([
-            $this->username() => [__('login.login_failed')],
-        ]);
+        $rules = [
+            'name' => 'required|string',
+            'password' => 'required|string',
+        ];
+
+        $customMessages = [
+            'name.required' => __('login.username_required'),
+            'password.required' => __('login.password_required')
+        ];
+
+        $this->validate($request, $rules, $customMessages);
+    }
+
+    public function authenticated(Request $request, $user)
+    {
+        $this->notificationService->addStatusMessage(__('login.successful'), 'info');
     }
 }
