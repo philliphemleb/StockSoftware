@@ -9,9 +9,9 @@
             @foreach($itemCollection as $item)
                 <item-table-item
                     :rows="{{ json_encode([ $item->name, $item->amount ]) }}"
-                    edit-route="{{ route('item.edit', $item->id) }}"
-                    delete-route="{{ route('item.destroy', $item->id) }}"
-                    csrf-token="{{ csrf_token() }}">
+                    edit_route="{{ route('item.edit', $item->id) }}"
+                    delete_route="{{ route('item.destroy', $item->id) }}"
+                    csrf_token="{{ csrf_token() }}">
                 </item-table-item>
             @endforeach
         </table-component>

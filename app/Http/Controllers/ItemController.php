@@ -34,7 +34,7 @@ class ItemController extends Controller
 
     public function __construct(NotificationService $notificationService, ItemService $itemService)
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
         $this->notificationService = $notificationService;
         $this->itemService = $itemService;
     }
