@@ -1,19 +1,19 @@
 <template>
     <span class="px-4 py-2 m-2 border-b-2 border-blue-400 flex-1 relative text-center select-non cursor-pointer" @click="toggleTooltip()">
-        <span v-if="!hoverLinks">
+        <span v-if="!hover_links">
             <a :href="route" class="outline-none font-normal hover:text-blue-400">
                 <i :class="icon"></i>
                 <span class="block w-full"><slot></slot></span>
             </a>
         </span>
-        <span v-else-if="hoverLinks">
+        <span v-else-if="hover_links">
             <a class="outline-none font-normal hover:text-blue-400" ref="btnRef">
                 <i :class="icon"></i>
                 <span class="block w-full"><slot></slot></span>
             </a>
         </span>
-        <div v-if="hoverLinks" v-bind:class="{'invisible': !tooltipShow}" ref="toolTipRef" class="absolute top-0 text-red-500 bg-gray-900 text-left hidden md:block">
-            <a :href="route" v-if="hoverLinks && route">
+        <div v-if="hover_links" v-bind:class="{'invisible': !tooltipShow}" ref="toolTipRef" class="absolute top-0 text-red-500 bg-gray-900 text-left hidden md:block">
+            <a :href="route" v-if="hover_links && route">
                 <div class="hover:bg-blue-500 hover:bg-opacity-25 text-white p-3">
                     <span>
                         <i :class="icon" class="pr-1"></i>
@@ -23,7 +23,7 @@
                     </span>
                 </div>
             </a>
-            <a :href="link[1]" v-for="link in hoverLinks">
+            <a :href="link[1]" v-for="link in hover_links">
                 <div class="hover:bg-blue-500 hover:bg-opacity-25 text-white p-3">
                     <span>
                         <i :class="icon" class="pr-1"></i>
@@ -42,7 +42,7 @@
         props: {
             'route': {type: String, required: false},
             'icon': {type: String, required: true},
-            'hoverLinks': {type: Array, required: false}
+            'hover_links': {type: Array, required: false}
         },
 
         data: function () {
