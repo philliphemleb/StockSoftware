@@ -1,5 +1,5 @@
 <template>
-    <span class="px-4 py-2 m-2 border-b-2 border-blue-400 flex-1 relative text-center select-non cursor-pointer" @click="toggleTooltip()">
+    <span class="px-4 py-2 m-2 border-b-2 border-blue-400 flex-1 relative text-center select-non cursor-pointer select-none" @click="toggleTooltip()">
         <span v-if="!hover_links">
             <a :href="route" class="outline-none font-normal hover:text-blue-400">
                 <i :class="icon"></i>

@@ -50,8 +50,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         $messages = [
-            'password.min'    => __('register.password_min'),
-            'password.confirmed'    => __('register.password_confirmed'),
+            'password.min'    => __('auth.password_min'),
+            'password.confirmed'    => __('auth.password_confirmed_error'),
         ];
 
         return Validator::make($data, [
