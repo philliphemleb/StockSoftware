@@ -21,7 +21,7 @@ window.Vue = require('vue');
 
 // Single Components
 Vue.component('table-component', require('./components/Table').default);
-Vue.component('table-item', require('./components/TableItem').default);
+Vue.component('table-item', require('./components/table/TableItem').default);
 
 Vue.component('search', require('./components/Search').default);
 
@@ -32,6 +32,9 @@ Vue.component('navigation-list-item', require('./components/navigation/Navigatio
 // Notification
 Vue.component('notification-container', require('./components/notification/NotificationContainer').default);
 Vue.component('notification-item', require('./components/notification/NotificationItem').default);
+
+// Item
+Vue.component('item-table-item', require('./components/item/TableItem').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
