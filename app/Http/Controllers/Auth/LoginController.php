@@ -60,8 +60,8 @@ class LoginController extends Controller
         ];
 
         $customMessages = [
-            'name.required' => __('login.username_required'),
-            'password.required' => __('login.password_required')
+            'name.required' => __('auth.username_required'),
+            'password.required' => __('auth.password_required')
         ];
 
         $this->validate($request, $rules, $customMessages);
@@ -69,6 +69,6 @@ class LoginController extends Controller
 
     public function authenticated(Request $request, $user)
     {
-        $this->notificationService->addStatusMessage(__('login.successful'), 'info');
+        $this->notificationService->addStatusMessage(__('auth.successful'), 'info');
     }
 }

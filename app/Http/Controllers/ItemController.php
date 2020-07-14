@@ -85,7 +85,7 @@ class ItemController extends Controller
         $item->user_id = $user->id;
         $item->save();
 
-        return redirect()->route('item.show', $item->id);
+        return redirect()->route('item.index');
     }
 
     /**
