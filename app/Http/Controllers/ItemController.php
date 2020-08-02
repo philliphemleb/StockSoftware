@@ -53,7 +53,7 @@ class ItemController extends Controller
         if ($searchString)
         {
             $itemCollectionData = Item::where(function (Builder $query) use ($searchString) {
-                return $query->where('name','LIKE',$searchString.'%');
+                return $query->where('name','LIKE','%'.$searchString.'%');
             })->limit(50)->get();
         }
 
