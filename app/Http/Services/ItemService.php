@@ -27,7 +27,7 @@ class ItemService
         {
             $tagString = trim($tagString);
             if ($tagString === null || empty($tagString)) continue;
-            if ($item->tags->where('name', $tagString)->count() > 0) continue;
+            if ($item->tags()->where('name', $tagString)->count() > 0) continue;
 
 
             $tag = Tag::firstOrNew(['name' => $tagString]);
@@ -50,9 +50,9 @@ class ItemService
         {
             $tagString = trim($tagString);
             if ($tagString === null || empty($tagString)) continue;
-            if ($item->tags->where('name', $tagString)->count() <= 0) continue;
+            if ($item->tags()->where('name', $tagString)->count() <= 0) continue;
 
-            $tag = $item->tags->where('name', $tagString)->first();
+            $tag = $item->tags()->where('name', $tagString)->first();
             $item->tags()->detach($tag);
         }
     }
@@ -70,11 +70,12 @@ class ItemService
         foreach($categories as $categoryString)
         {
             $categoryString = trim($categoryString);
-            if ($categoryString === null || empty($categoryString)) continue;
-            if ($item->categories->where('name', $categoryString)->count() > 0) continue;
 
+            if ($categoryString === null || empty($categoryString)) continue;
+            if ($item->categories()->where('name', $categoryString)->count() > 0) continue;
 
             $category = Category::firstOrNew(['name' => $categoryString]);
+
             $item->categories()->save($category);
         }
     }
@@ -94,9 +95,9 @@ class ItemService
         {
             $categoryString = trim($categoryString);
             if ($categoryString === null || empty($categoryString)) continue;
-            if ($item->categories->where('name', $categoryString)->count() <= 0) continue;
+            if ($item->categories()->where('name', $categoryString)->count() <= 0) continue;
 
-            $category = $item->categories->where('name', $categoryString)->first();
+            $category = $item->categories()->where('name', $categoryString)->first();
             $item->categories()->detach($category);
         }
     }

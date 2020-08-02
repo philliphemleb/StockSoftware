@@ -47,14 +47,14 @@ class ItemController extends Controller
      */
     public function index(Request $request): Renderable
     {
-        $itemCollectionData = Item::all()->take(50);
+        $itemCollectionData = Item::with(['tags', 'categories'])->take(50)->get();
 
-        $searchString = $request->get('search');
+        $searchString = $request->get('search-input');
         if ($searchString)
         {
             $itemCollectionData = Item::where(function (Builder $query) use ($searchString) {
                 return $query->where('name','LIKE',$searchString.'%');
-            })->limit(30)->get();
+            })->limit(50)->get();
         }
 
         return view('item.index', ['itemCollection' => $itemCollectionData]);
@@ -81,9 +81,13 @@ class ItemController extends Controller
         $user = auth()->user();
 
         $item = new Item();
+
         $item->fill($request->all());
         $item->user_id = $user->id;
         $item->save();
+
+        $this->itemService->addTagsToItemFromString($item, $request->tags);
+        $this->itemService->addCategoriesToItemFromString($item, $request->categories);
 
         return redirect()->route('item.index');
     }
