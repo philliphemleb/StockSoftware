@@ -1,10 +1,16 @@
 module.exports = {
-  purge: [],
-  theme: {
+    purge: [],
+    theme: {
+      fontFamily: {
+          'mono': ['-apple-system', 'BlinkMacSystemFont']
+      },
       container: {
           center: true,
       },
-  },
-  variants: {},
-  plugins: [],
+    },
+    variants: {},
+    plugins: [],
+    corePlugins: {
+        gridAutoFlow: false,
+    },
 }
