@@ -7,7 +7,7 @@ return [
     'name' => 'Name',
     'name_placeholder' => 'Name des Artikels',
 
-    'description' => 'Beschreibung',
+    'description' => 'Beschreibung (max 255)',
     'description_placeholder' => 'Beschreibung eingeben',
 
     'amount' => 'Anzahl',

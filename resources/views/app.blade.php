@@ -52,7 +52,7 @@
             </navigation>
         </div>
 
-        <main class="md:col-start-2 md:col-end-5">
+        <main class="md:col-start-2 md:col-end-5 mb-24">
             @yield('content')
         </main>
     </div>
