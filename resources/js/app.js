@@ -13,15 +13,14 @@ window.Vue = require('vue');
  * Vue components. It will recursively scan this directory for the Vue
  * components and automatically register them with their "basename".
  *
- * Eg. ./components/NotificationComponent.vue -> <example-component></example-component>
+ * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-// Single Components
-Vue.component('table-component', require('./components/Table').default);
-Vue.component('table-item', require('./components/table/TableItem').default);
+// Item
+Vue.component('item-card', require('./components/item/Card').default);
 
 Vue.component('search', require('./components/Search').default);
 
@@ -32,9 +31,6 @@ Vue.component('navigation-list-item', require('./components/navigation/Navigatio
 // Notification
 Vue.component('notification-container', require('./components/notification/NotificationContainer').default);
 Vue.component('notification-item', require('./components/notification/NotificationItem').default);
-
-// Item
-Vue.component('item-table-item', require('./components/item/TableItem').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
