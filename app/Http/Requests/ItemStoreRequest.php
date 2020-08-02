@@ -25,8 +25,10 @@ class ItemStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:100',
-            'description' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
             'amount' => 'required|integer',
+            'categories' => 'required|string',
+            'tags' => 'nullable|string',
         ];
     }
 
@@ -36,7 +38,8 @@ class ItemStoreRequest extends FormRequest
             'name.required' => __('item.name_required'),
             'description.required' => __('item.description_required'),
             'amount.required' => __('item.amount_required'),
-            'amount.integer' => __('item.amount_too_high')
+            'amount.integer' => __('item.amount_too_high'),
+            'categories.required' => __('item.categories_required'),
         ];
     }
 }
