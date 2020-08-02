@@ -16,15 +16,19 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|Category newQuery()
  * @method static Builder|Category query()
  * @mixin Eloquent
+ * @property int $id
+ * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Category whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Category whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Category whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Category whereUpdatedAt($value)
  */
 class Category extends Model
 {
     protected $fillable = [
-        'name', 'description'
-    ];
-
-    protected $attributes = [
-        'description' => '',
+        'name'
     ];
 
     public function Items()
