@@ -20,17 +20,17 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 // Item
-Vue.component('item-card', require('./components/item/Card').default);
-
-Vue.component('search', require('./components/Search').default);
+Vue.component('itemIndex', require('./components/item/Index').default);
+Vue.component('itemCard', require('./components/item/Card').default);
+Vue.component('itemList', require('./components/item/List').default);
 
 // Navigation
 Vue.component('navigation', require('./components/navigation/Navigation').default);
-Vue.component('navigation-list-item', require('./components/navigation/NavigationListItem').default);
+Vue.component('navigationListItem', require('./components/navigation/NavigationListItem').default);
 
 // Notification
-Vue.component('notification-container', require('./components/notification/NotificationContainer').default);
-Vue.component('notification-item', require('./components/notification/NotificationItem').default);
+Vue.component('notificationContainer', require('./components/notification/NotificationContainer').default);
+Vue.component('notificationItem', require('./components/notification/NotificationItem').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

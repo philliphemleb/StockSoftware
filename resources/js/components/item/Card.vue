@@ -1,21 +1,22 @@
 <template>
-    <div class="rounded border border-gray-600 shadow-lg md:border-0 mt-3 mx-3 col-span-3 md:col-span-1 flex flex-wrap">
-        <div class="px-2 pt-6 text-center w-full">
-            <div v-for="category in item.categories" :key="category.id" class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-1 w-1/2">{{ category.name }}</div>
+    <div class="rounded border border-gray-600 shadow-lg md:border-0 mt-3 mx-3 flex flex-wrap col-span-12 lg:col-span-6"
+         v-bind:class="{'xl:col-span-12': this.size === 1, 'xl:col-span-6': this.size === 2, 'xl:col-span-4': this.size === 3, 'xl:col-span-3': this.size === 4}">
+        <div class="px-2 pt-6 text-center w-full self-start">
+            <div v-for="category in item.categories" class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-1 w-1/2">{{ category.name }}</div>
         </div>
 
-        <div class="px-3 text-gray-700 text-base mb-3 w-full">
+        <div class="px-3 text-gray-700 text-base mb-3 w-full self-center text-center">
             <p class="font-bold text-xl mb-2">{{ this.item.name }}</p>
             <p v-if="this.item.description">{{ this.item.description }}</p>
-            <p v-else class="text-center text-gray-500">Keine Beschreibung angegeben</p>
+            <p v-else class="text-gray-500">{Keine Beschreibung angegeben}</p>
         </div>
 
         <div class="px-3 pb-6 flex w-full self-end">
             <button class="w-1/2 bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-full mr-1">
-                Anzeigen
+                {Info}
             </button>
             <button class="w-1/2 bg-red-500 hover:bg-red-900 text-white font-bold py-2 px-4 rounded-full ml-1">
-                Löschen
+                {Löschen}
             </button>
         </div>
     </div>
@@ -23,16 +24,10 @@
 
 <script>
     export default {
-        props: ['item', 'tags'],
+        props: ['item', 'size'],
 
         data: function () {
             return {
-
-            }
-        },
-
-        methods: {
-            test: function () {
 
             }
         },

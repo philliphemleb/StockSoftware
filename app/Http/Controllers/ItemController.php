@@ -10,11 +10,14 @@ use App\Http\Services\NotificationService;
 use App\Item;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\View\View;
 
 class ItemController extends Controller
 {
@@ -43,19 +46,24 @@ class ItemController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return Renderable
+     * @return Application|Factory|Builder[]|Collection|View
      */
-    public function index(Request $request): Renderable
+    public function index(Request $request)
     {
-        $itemCollectionData = Item::with(['tags', 'categories'])->take(50)->get();
-
-        $searchString = $request->get('search-input');
-        if ($searchString)
+        if (! $request->wantsJson())
         {
-            $itemCollectionData = Item::where('name','LIKE','%'.$searchString.'%')->limit(50)->get();
+            return view('item.index');
         }
 
-        return view('item.index', ['itemCollection' => $itemCollectionData]);
+        $itemCollectionData = Item::with(['tags', 'categories'])->take(50)->get();
+
+        $searchString = $request->get('search');
+        if ($searchString)
+        {
+            $itemCollectionData = Item::where('name','LIKE','%'.$searchString.'%')->with(['tags', 'categories'])->limit(50)->get();
+        }
+
+        return $itemCollectionData;
     }
 
     /**
