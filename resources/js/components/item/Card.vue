@@ -2,7 +2,9 @@
     <div class="rounded border border-gray-600 shadow-lg md:border-0 mt-3 mx-3 flex flex-wrap col-span-12 lg:col-span-6"
          v-bind:class="{'xl:col-span-12': this.size === 1, 'xl:col-span-6': this.size === 2, 'xl:col-span-4': this.size === 3, 'xl:col-span-3': this.size === 4}">
         <div class="px-2 pt-6 text-center w-full self-start">
-            <div v-for="category in item.categories" class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-1 w-1/2">{{ category.name }}</div>
+            <p v-for="n in 2" v-if="item.categories[n] !== undefined" class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-1 w-1/2">
+                <span>{{ item.categories[n].name }}</span>
+            </p>
         </div>
 
         <div class="px-3 text-gray-700 text-base mb-3 w-full self-center text-center">
