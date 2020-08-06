@@ -110,7 +110,7 @@
 </template>
 
 <script>
-    import axios from "axios";
+    import http from './http';
 
     export default {
         data: function ()
@@ -131,13 +131,13 @@
                     skip = (skip - 1) * 10;
                 }
 
-                await axios.get("http://192.168.0.26/StockSoftware/public/item?skip=" + skip + "&search=" + this.search)
-                    .then(response => {
-                        this.items = response.data.items;
-                        this.totalItemsBy50 = Math.floor(response.data.totalItems / 50);
-                        this.loaded = true;
-                    })
-                    .catch(error => console.log(error));
+                this.loaded = false;
+                await http.getItems(this.search, skip).then(response => {
+                   this.items = response.items;
+                    this.totalItemsBy50 = Math.floor(response.totalItems / 50);
+                    this.loaded = true;
+                })
+                .catch(error => console.log(error));
             },
         },
 

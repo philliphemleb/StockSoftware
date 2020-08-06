@@ -22,7 +22,6 @@ window.Vue = require('vue');
 // Item
 Vue.component('itemIndex', require('./components/item/Index').default);
 Vue.component('itemCard', require('./components/item/Card').default);
-Vue.component('itemList', require('./components/item/List').default);
 
 // Navigation
 Vue.component('navigation', require('./components/navigation/Navigation').default);

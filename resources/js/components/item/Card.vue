@@ -6,7 +6,7 @@
         </div>
 
         <div class="px-3 text-gray-700 text-base mb-3 w-full self-center text-center">
-            <p class="font-bold text-xl mb-2"><span class="text-gray-500">{{ this.item.id }}</span> {{ this.item.name }}</p>
+            <p class="font-bold text-xl mb-2"><span class="text-gray-500">[Lagerplatz]</span> {{ this.item.name }}</p>
             <p v-if="this.item.description">{{ this.item.description }}</p>
             <p v-else class="text-gray-500">{Keine Beschreibung angegeben}</p>
         </div>
