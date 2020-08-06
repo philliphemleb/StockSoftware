@@ -54,17 +54,23 @@ class ItemController extends Controller
         {
             return view('item.index');
         }
-
-        $itemCollectionData = Item::with(['tags', 'categories'])->take(50)->get();
-
         $searchString = $request->get('search');
+        $skipAmountForPagination = $request->get('skip') ?? 0;
+        $totalItems = Item::all()->count();
+
+        $itemCollectionData = Item::with(['tags', 'categories'])->skip($skipAmountForPagination)->take(50)->get();
+
         if ($searchString)
         {
-            $itemCollectionData = Item::where('name','LIKE','%'.$searchString.'%')->with(['tags', 'categories'])->limit(50)->get();
+            $itemCollectionData = Item::where('name','LIKE','%'.$searchString.'%')
+                ->with(['tags', 'categories'])
+                ->skip($skipAmountForPagination)
+                ->take(50)
+                ->get();
+            $totalItems = $itemCollectionData->count();
         }
-        $totalBy10 = floor(count($itemCollectionData) / 10);
 
-        return ['items' => $itemCollectionData, 'totalBy10' => $totalBy10];
+        return ['items' => $itemCollectionData, 'totalItems' => $totalItems];
     }
 
     /**
