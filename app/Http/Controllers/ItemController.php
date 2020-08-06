@@ -62,8 +62,9 @@ class ItemController extends Controller
         {
             $itemCollectionData = Item::where('name','LIKE','%'.$searchString.'%')->with(['tags', 'categories'])->limit(50)->get();
         }
+        $totalBy10 = floor(count($itemCollectionData) / 10);
 
-        return $itemCollectionData;
+        return ['items' => $itemCollectionData, 'totalBy10' => $totalBy10];
     }
 
     /**
