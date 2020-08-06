@@ -18,14 +18,19 @@
                 <button @click="cardSize = 3" class="hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-l">
                     <i class="fas fa-dice-three"></i>
                 </button>
-                <button @click="cardSize = 4" class="hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-l">
-                    <i class="fas fa-dice-four"></i>
-                </button>
             </div>
         </div>
 
         <div class="grid grid-cols-12">
             <item-card v-for="item in items" :key="item.id" :item="item" :size="cardSize"></item-card>
+        </div>
+
+        <div class="text-center mt-2">
+            <div class="xl:inline-flex text-center text-xl border-b-2 border-blue-500">
+                <button v-for="n in totalItemsBy10" @click="fetchItems(n)" class="hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-l">
+                    {{ n }}
+                </button>
+            </div>
         </div>
     </div>
 </template>
@@ -40,14 +45,18 @@
                 search: "",
                 items: [],
                 cardSize: 3,
+                totalItemsBy10: ''
             }
         },
 
         methods: {
-            fetchItems: function ()
+            fetchItems: function (pagination = 0)
             {
-                axios.get("http://192.168.0.26/StockSoftware/public/item?search=" + this.search)
-                    .then(response => this.items = response.data)
+                axios.get("http://192.168.0.26/StockSoftware/public/item?pagination=" + pagination + "&search=" + this.search)
+                    .then(response => {
+                        this.items = response.data.items;
+                        this.totalItemsBy10 = response.data.totalBy10;
+                    })
                     .catch(error => console.log(error));
             },
         },
