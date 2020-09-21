@@ -8,6 +8,7 @@ use App\Http\Requests\ItemUpdateRequest;
 use App\Http\Services\ItemService;
 use App\Http\Services\NotificationService;
 use App\Item;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\Factory;
@@ -97,12 +98,13 @@ class ItemController extends Controller
 
         $item->fill($request->all());
         $item->user_id = $user->id;
+
         $item->save();
 
         $this->itemService->addTagsToItemFromString($item, $request->tags);
         $this->itemService->addCategoriesToItemFromString($item, $request->categories);
 
-        return redirect()->route('item.index');
+        return redirect()->route('item.edit', $item->id);
     }
 
     /**
@@ -122,7 +124,7 @@ class ItemController extends Controller
      * @param  int  $id
      * @return RedirectResponse|Renderable
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         try {
             $item = Item::findOrFail($id);
@@ -141,7 +143,7 @@ class ItemController extends Controller
      * @param int $id
      * @return Application|RedirectResponse|Redirector
      */
-    public function update(ItemUpdateRequest $request, $id)
+    public function update(ItemUpdateRequest $request, int $id)
     {
         try {
             $item = Item::findOrFail($id);
@@ -154,8 +156,8 @@ class ItemController extends Controller
         $this->itemService->deleteTagsFromItemWithString($item, $request->get('deleteTags'));
         $this->itemService->addCategoriesToItemFromString($item, $request->get('categories'));
         $this->itemService->deleteCategoriesFromItemWithString($item, $request->get('deleteCategories'));
-        $item->fill($request->all());
 
+        $item->fill($request->all());
         $item->save();
 
         $this->notificationService->addStatusMessage(__('item.update_successful'));
@@ -168,15 +170,23 @@ class ItemController extends Controller
      * @param  int  $id
      * @return RedirectResponse
      */
-    public function destroy($id): RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
-        try {
+        try
+        {
             $item = Item::findOrFail($id);
-        } catch(ModelNotFoundException $e) {
+            $item->delete();
+        }
+        catch(ModelNotFoundException $e)
+        {
             $this->notificationService->addStatusMessage(__('item.delete_unsuccessful'));
             return redirect()->route('item.index');
         }
-        $item->delete();
+        catch(Exception $e)
+        {
+            $this->notificationService->addStatusMessage(__('exception.unexpected_exception'));
+            return redirect()->route('item.index');
+        }
 
         $this->notificationService->addStatusMessage(__('item.delete_successful'));
         return redirect()->route('item.index');
