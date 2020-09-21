@@ -36,7 +36,7 @@ class ItemService
     }
 
     /**
-     * Handles the Tags String and deletes them in the given.
+     * Handles the Tags String and deletes them in the given Item.
      *
      * @param Item $item
      * @param string|null $tags
@@ -81,7 +81,7 @@ class ItemService
     }
 
     /**
-     * Handles the Categories String and deletes them in the given.
+     * Handles the Categories String and deletes them in the given Item.
      *
      * @param Item $item
      * @param string|null $categories

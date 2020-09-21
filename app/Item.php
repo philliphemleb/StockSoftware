@@ -40,7 +40,7 @@ use Illuminate\Support\Carbon;
 class Item extends Model
 {
     protected $fillable = [
-      'name', 'description', 'amount', 'user_id'
+      'name', 'description', 'amount', 'user_id', 'shelf', 'row', 'field'
     ];
 
     /**

@@ -40,6 +40,13 @@
                 <input id="tags" name="tags" type="text" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-100 leading-tight transition ease-in duration-150 transform focus:bg-white focus:shadow focus:scale-105" placeholder="{{ __('item.tags_placeholder') }}">
             </div>
 
+            <div class="mb-6">
+                <label class="text-l" for="tags">
+                    {Shelf, Row, Field}
+                </label>
+                <input id="position" name="position" type="text" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-100 leading-tight transition ease-in duration-150 transform focus:bg-white focus:shadow focus:scale-105" placeholder="{Shelf, Row, Field}">
+            </div>
+
             <button type="submit" class="w-full border-2 border-blue-700 bg-blue-500 text-white font-bold py-2 px-6 rounded hover:bg-blue-700 hover:shadow">{{ __('button.submit') }}</button>
         </form>
     </div>

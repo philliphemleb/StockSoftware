@@ -13,6 +13,8 @@ return [
     'amount' => 'Anzahl',
     'amount_placeholder' => 'Anzahl eingeben',
 
+    'storage_place' => 'Lagerplatz',
+
     'categories' => 'Kategorien',
     'categories_placeholder' => 'Einzelne Kategorien mit einem Komma trennen',
 

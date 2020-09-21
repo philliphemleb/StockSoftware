@@ -19,6 +19,9 @@ class CreateItemsTable extends Migration
             $table->text('description')->nullable();
             $table->integer('amount');
             $table->integer('user_id');
+            $table->integer('shelf')->nullable();
+            $table->integer('row')->nullable();
+            $table->integer('field')->nullable();
             $table->timestamps();
         });
     }
