@@ -10,7 +10,7 @@
                 </span>
             </div>
             <div class="col-span-1 text-right self-center">
-                <button class="bg-blue-700 hover:border-black hover:bg-blue-800 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                <button @click="$emit('item-details')" class="bg-blue-700 hover:border-black hover:bg-blue-800 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                     Info
                 </button>
                 <button class="bg-white hover:border-black hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
