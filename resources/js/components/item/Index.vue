@@ -15,7 +15,7 @@
             <item-modal v-if="showModal" v-on:close-click="toggleModal()" :item="selectedItem"></item-modal>
 
             <div class="flex flex-row border-b border-b-2 border-blue-500 py-2">
-                <label>
+                <label class="appearance-none bg-transparent border-none w-full text-gray-700 mr-r py-1 px-2 leading-tight">
                     <input
                         class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none focus:font-bold self-center"
                         type="text" v-model="search" placeholder="Artikel suchen" @keyup.enter="fetchItems">
