@@ -23,6 +23,14 @@
                 <button @click="fetchItems" class="flex-shrink-0 bg-blue-500 mr-1 hover:bg-gray-900 border-blue-500 hover:border-gray-900 text-sm border-4 text-white py-1 px-2 rounded fas fa-search" type="submit"></button>
             </div>
 
+            <div class="text-center mt-5">
+                <div class="xl:inline-flex text-center text-xl border-b-2 border-blue-500">
+                    <button v-for="n in totalItemsBy50" @click="fetchItems(n)" class="hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-l">
+                        {{ n }}
+                    </button>
+                </div>
+            </div>
+
             <div>
                 <item-list v-for="item in items" :key="item.id" :item="item" v-on:item-details="toggleModal(item)"></item-list>
             </div>
