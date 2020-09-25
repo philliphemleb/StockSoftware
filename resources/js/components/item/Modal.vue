@@ -5,15 +5,15 @@
                 <div class="font-mono w-full text-center mb-2">
                     <p class="font-bold text-xl text-gray-600">{{ position() }}</p>
                     <p class="text-5xl">{{ this.item.name }}</p>
-                    <p class="text-2xl" v-if="this.item.description">{{ this.item.description}}</p>
+                    <p class="text-2xl" v-if="this.item.description">{{ this.item.description }}</p>
                     <p v-else class="text-gray-500">{Keine Beschreibung angegeben}</p>
                 </div>
                 <div class="pt-2 pb-2 w-full flex divide-x">
                     <div class="w-1/2 pr-2">
-                        <div v-for="category in item.categories" class="w-1/2 inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-1">{{ category.name }}</div>
+                        <div v-for="category in item.categories" class="w-1/2 inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-1 truncate">{{ category.name }}</div>
                     </div>
                     <div class="w-1/2 pl-2">
-                        <div v-for="tag in item.tags" class="w-1/2 inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-1">{{ tag.name }}</div>
+                        <div v-for="tag in item.tags" class="w-1/2 inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-1 truncate">{{ tag.name }}</div>
                     </div>
                 </div>
                 <div class="pt-5 w-full font-bold text-lg">
@@ -43,9 +43,9 @@
                     <div class="w-full flex border-b-2 border-blue-400 mt-2">
                         <p class="w-1/2 text-left">Tags</p>
                         <div class="w-1/2 border-l-2 border-blue-400 flex pl-1">
-                            <input class="w-11/12" placeholder="Tags eintragen">
+                            <input class="w-11/12" placeholder="Tags eintragen" v-model="tagsInputField">
                             <button class="w-1/12 text-center text-white font-bold rounded-full">
-                                <i class="far fa-plus-square text-blue-400"></i>
+                                <i class="far fa-plus-square text-blue-400" @click="addTags()"></i>
                             </button>
                         </div>
                     </div>
@@ -69,7 +69,8 @@
 
         data: function () {
             return {
-                categoriesInputField: ''
+                categoriesInputField: '',
+                tagsInputField: ''
             }
         },
 
@@ -83,9 +84,22 @@
                 return shelf + ', ' + row + ', ' + field;
             },
 
-            addCategories: function ()
+            addCategories: async function ()
             {
-                http.updateItem()
+                await http.updateCategories(this.item.id, this.categoriesInputField).then(response =>
+                {
+                     this.item.categories = response.categories;
+                })
+                .catch(error => console.log(error));
+            },
+
+            addTags: async function ()
+            {
+                await http.updateTags(this.item.id, this.tagsInputField).then(response =>
+                {
+                    // Update Tags
+                })
+                .catch(error => console.log(error));
             }
         },
 

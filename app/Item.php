@@ -36,6 +36,12 @@ use Illuminate\Support\Carbon;
  * @property-read int|null $categories_count
  * @property-read Collection|Tag[] $tags
  * @property-read int|null $tags_count
+ * @property int|null $shelf
+ * @property int|null $row
+ * @property int|null $field
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Item whereField($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Item whereRow($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Item whereShelf($value)
  */
 class Item extends Model
 {
