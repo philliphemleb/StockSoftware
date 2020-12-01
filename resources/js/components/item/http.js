@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const backendUrl = "http://localhost/StockSoftware/public/";
+const backendUrl = "http://localhost/StockSoftware/public";
 
 export default {
     async fetchItems(search, skip)
