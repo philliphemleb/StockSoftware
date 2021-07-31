@@ -1,3 +1,6 @@
+# Deprecated
+This Project will be replaced by a separate Backend and Frontend Project in the near future.
+
 ## About
 I am currently developing StockSoftware exclusively for learning purposes.
 StockSoftware is a warehouse manager for medium-sized and large warehouses.
