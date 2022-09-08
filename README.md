@@ -1,5 +1,5 @@
 # Deprecated
-This Project will be replaced by a separate Backend and Frontend Project in the near future.
+This project will not receive updates in the future.
 
 ## About
 I am currently developing StockSoftware exclusively for learning purposes.
